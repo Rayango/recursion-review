@@ -13,6 +13,15 @@ var stringifyJSON = function(obj) {
       stringifiedElements.push(stringifyJSON(obj[i]));
     }
     return '[' + stringifiedElements.join(',') + ']';
+  } else if (typeof obj === 'object' && obj) {
+    let stringifiedKeyValues = [];
+    for (var key in obj) {
+      if (typeof obj[key] === 'function' || obj[key] === undefined) {
+        return '{}';
+      }
+      stringifiedKeyValues.push(stringifyJSON(key) + ':' + stringifyJSON(obj[key]));
+    }
+    return '{' + stringifiedKeyValues.join(',') + '}';
   }
   return '' + obj;
 
